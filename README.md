@@ -7,7 +7,17 @@ This custom Tronbyt app displays four live Home Assistant temperatures together 
 - Office temperature
 - Sensi thermostat temperature
 
-The thermostat is in the top-left, Master Bedroom in the top-right, Guest Bedroom in the bottom-left, and Office in the bottom-right. Each tile has an animated pixel icon and shows temperature to one decimal place. All labels are white. Room temperatures are blue at least 1°F below the thermostat setpoint, white from less than 1°F below through less than 2°F above, yellow from 2°F through less than 3°F above, and red at least 3°F above. The thermostat temperature is blue in Cool mode, green in Auto mode, and orange in Heat mode.
+The thermostat is in the top-left, Master Bedroom in the top-right, Guest Bedroom in the bottom-left, and Office in the bottom-right. Horizontal and vertical divider lines form four boxes. Each tile has a still pixel icon and shows temperature to one decimal place. All labels are white and use spaced lettering.
+
+The thermostat tile shows `current room temperature • setpoint`. The dot and setpoint are blue in Cool mode, green in Auto mode, and orange in Heat mode. The thermostat's current room temperature uses the same setpoint comparison colors as the other three sensors.
+
+All room temperatures are compared with the Sensi cooling setpoint (`target_temp_high`) in Auto/Cool mode and heating setpoint (`target_temp_low`) in Heat mode:
+
+- More than 2°F below: blue
+- Exactly 2°F below: light blue
+- Between 2°F below and 2°F above (not including either endpoint): white
+- 2°F through less than 3°F above: yellow
+- At least 3°F above: red
 
 ## Tronbyt configuration
 
@@ -26,6 +36,8 @@ apps/
   homeclimate/
     home_climate.star
     manifest.yaml
+    home_climate.webp
+    images/
 ```
 
 Then enter the GitHub repository URL under **Tronbyt → Settings → Content → Custom App Repo**, press **Refresh**, and search for **Couser Home Climate** under **Add App**.
