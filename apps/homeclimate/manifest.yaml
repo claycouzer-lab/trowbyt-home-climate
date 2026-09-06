@@ -1,0 +1,16 @@
+---
+id: homeclimate
+name: Couser Home Climate
+summary: Home Assistant room temperatures
+desc: Shows four Home Assistant temperature sensors together on one screen.
+author: OpenAI for Clay Couser
+fileName: home_climate.star
+packageName: homeclimate
+recommendedInterval: 1
+category: utilities
+tags:
+  - smart-home
+  - temperature
+  - home-assistant
+published: "2026-09-06T00:00:00Z"
+updated: "2026-09-06T21:18:00Z"
