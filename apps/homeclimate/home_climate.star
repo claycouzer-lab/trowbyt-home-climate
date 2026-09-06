@@ -161,7 +161,23 @@ def compact_temperature(temperature, color, show_degree = True):
         ],
     )
 
-def sensor_tile(title, temperature, icon, width, height, temperature_color = TEMP_COLOR):
+def compact_title(first_word, second_word = None):
+    if second_word == None:
+        return render.Text(
+            content = first_word,
+            color = TEMP_COLOR,
+            font = "tom-thumb",
+        )
+    return render.Row(
+        cross_align = "center",
+        children = [
+            render.Text(content = first_word, color = TEMP_COLOR, font = "tom-thumb"),
+            render.Box(width = 1, height = 1),
+            render.Text(content = second_word, color = TEMP_COLOR, font = "tom-thumb"),
+        ],
+    )
+
+def sensor_tile(first_word, second_word, temperature, icon, width, height, temperature_color = TEMP_COLOR):
     return render.Box(
         width = width,
         height = height,
@@ -170,11 +186,7 @@ def sensor_tile(title, temperature, icon, width, height, temperature_color = TEM
             cross_align = "center",
             main_align = "center",
             children = [
-                render.Text(
-                    content = title,
-                    color = TEMP_COLOR,
-                    font = "tom-thumb",
-                ),
+                compact_title(first_word, second_word),
                 render.Row(
                     main_align = "center",
                     children = [
@@ -247,15 +259,15 @@ def main(config):
                     children = [
                         thermostat_tile(thermostat_temp, setpoint, thermostat_mode),
                         render.Box(width = 1, height = 15, color = DIVIDER_COLOR),
-                        sensor_tile("MAST. BED", master_temp, MASTER_BED_ICON, 32, 15, room_temperature_color(master_temp, setpoint)),
+                        sensor_tile("MAST", "BED", master_temp, MASTER_BED_ICON, 32, 15, room_temperature_color(master_temp, setpoint)),
                     ],
                 ),
                 render.Box(width = 64, height = 1, color = DIVIDER_COLOR),
                 render.Row(
                     children = [
-                        sensor_tile("GUEST BED", guest_temp, GUEST_BED_ICON, 31, 16, room_temperature_color(guest_temp, setpoint)),
+                        sensor_tile("GST", "BED", guest_temp, GUEST_BED_ICON, 31, 16, room_temperature_color(guest_temp, setpoint)),
                         render.Box(width = 1, height = 16, color = DIVIDER_COLOR),
-                        sensor_tile("OFFICE", office_temp, OFFICE_ICON, 32, 16, room_temperature_color(office_temp, setpoint)),
+                        sensor_tile("OFFICE", None, office_temp, OFFICE_ICON, 32, 16, room_temperature_color(office_temp, setpoint)),
                     ],
                 ),
             ],

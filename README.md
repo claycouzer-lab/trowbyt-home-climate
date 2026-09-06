@@ -7,7 +7,7 @@ This custom Tronbyt app displays four live Home Assistant temperatures together 
 - Office temperature
 - Sensi thermostat temperature
 
-The thermostat is in the top-left, Master Bedroom in the top-right, Guest Bedroom in the bottom-left, and Office in the bottom-right. Horizontal and vertical divider lines form four boxes. Each tile has a still pixel icon and shows temperature to one decimal place with a tightly spaced decimal. The white headings use the compact labels `THERMO`, `MAST. BED`, `GUEST BED`, and `OFFICE`.
+The thermostat is in the top-left, Master Bedroom in the top-right, Guest Bedroom in the bottom-left, and Office in the bottom-right. Horizontal and vertical divider lines form four boxes. Each tile has a still pixel icon and shows temperature to one decimal place with a tightly spaced decimal. The white headings use the compact labels `THERMO`, `MAST BED`, `GST BED`, and `OFFICE`.
 
 The thermostat tile shows `current room temperature • setpoint`. The dot and setpoint are blue in Cool mode, green in Auto mode, and orange in Heat mode. The thermostat's current room temperature uses the same setpoint comparison colors as the other three sensors.
 
