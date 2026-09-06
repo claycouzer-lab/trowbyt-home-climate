@@ -132,12 +132,34 @@ def format_temperature_number(value):
         rounded = int(number * 10 - 0.5) / 10.0
     return "%s" % rounded
 
+def temperature_parts(value):
+    number = float(value)
+    if number >= 0:
+        tenths = int(number * 10 + 0.5)
+    else:
+        tenths = int(number * 10 - 0.5)
+    whole = int(tenths / 10)
+    fraction = abs(tenths) % 10
+    return "%s" % whole, "%s" % fraction
+
 def format_setpoint(value):
     if value == None:
         return "--"
     number = float(value)
     rounded = int(number + 0.5)
     return "%s" % rounded
+
+def compact_temperature(temperature, color, show_degree = True):
+    whole, fraction = temperature_parts(temperature)
+    suffix = "%s°" % fraction if show_degree else fraction
+    return render.Row(
+        cross_align = "end",
+        children = [
+            render.Text(content = whole, color = color, font = "5x8"),
+            render.Box(width = 1, height = 1, color = color),
+            render.Text(content = suffix, color = color, font = "5x8"),
+        ],
+    )
 
 def sensor_tile(title, temperature, icon, width, height, temperature_color = TEMP_COLOR):
     return render.Box(
@@ -157,11 +179,7 @@ def sensor_tile(title, temperature, icon, width, height, temperature_color = TEM
                     main_align = "center",
                     children = [
                         render.Image(src = icon),
-                        render.Text(
-                            content = format_temperature(temperature),
-                            color = temperature_color,
-                            font = "5x8",
-                        ),
+                        compact_temperature(temperature, temperature_color),
                     ],
                 ),
             ],
@@ -178,7 +196,7 @@ def thermostat_tile(temperature, setpoint, mode):
             main_align = "center",
             children = [
                 render.Text(
-                    content = "THERMOSTAT",
+                    content = "THERMO",
                     color = TEMP_COLOR,
                     font = "tom-thumb",
                 ),
@@ -186,12 +204,10 @@ def thermostat_tile(temperature, setpoint, mode):
                     cross_align = "center",
                     main_align = "center",
                     children = [
-                        render.Text(
-                            content = format_temperature_number(temperature),
-                            color = room_temperature_color(temperature, setpoint),
-                            font = "5x8",
-                        ),
+                        compact_temperature(temperature, room_temperature_color(temperature, setpoint), False),
+                        render.Box(width = 1, height = 1),
                         render.Box(width = 1, height = 1, color = thermostat_color(mode)),
+                        render.Box(width = 1, height = 1),
                         render.Text(
                             content = format_setpoint(setpoint),
                             color = thermostat_color(mode),
@@ -231,7 +247,7 @@ def main(config):
                     children = [
                         thermostat_tile(thermostat_temp, setpoint, thermostat_mode),
                         render.Box(width = 1, height = 15, color = DIVIDER_COLOR),
-                        sensor_tile("MASTER BED", master_temp, MASTER_BED_ICON, 32, 15, room_temperature_color(master_temp, setpoint)),
+                        sensor_tile("MAST. BED", master_temp, MASTER_BED_ICON, 32, 15, room_temperature_color(master_temp, setpoint)),
                     ],
                 ),
                 render.Box(width = 64, height = 1, color = DIVIDER_COLOR),
